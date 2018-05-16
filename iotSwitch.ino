@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <TimeLib.h>
 #include <XIOTDisplay.h>
+#include <XIOTModule.h>
 
 #include "config.h"
 
@@ -31,6 +32,7 @@ time_t timeLast = 0;
 time_t timeLastGet = 0;
 bool wifiConnected = false;
 bool canGet = false;
+bool timeInitialized = false;
 
 char *localIP;
 
@@ -52,9 +54,6 @@ void setup(){
   oledDisplay = new DisplayClass(&display);
   initDisplay();
 
-  // After a reset, open Default Access Point
-  // If Access Point was customized, we'll switch to it after one minute
-  // This is supposed to give slave modules time to initialize.
   connectSTA();
   wifiSTAGotIpHandler = WiFi.onStationModeGotIP(onSTAGotIP); 
   wifiSTADisconnectedHandler = WiFi.onStationModeDisconnected(onSTADisconnected);      
@@ -76,25 +75,56 @@ void loop() {
     timeDisplay();
   }
   
-  if(canGet) {
+  // Should we get the config from master ?
+  if(wifiConnected && canGet) {
     timeLastGet = timeNow;
     canGet = false;
-    // Get the config information from the master
-    Serial.println("get /api/config");
-    HTTPClient http;
-    
-    // TODO : get IP from somewhere...
-    http.begin("http://192.168.4.1/api/config");
-    int httpCode = http.GET();   // Log stuff to Serial ?
-    Serial.print("HTTP code: ");
-    Serial.println(httpCode);
-    Serial.printf("HTTP GET failed, error: %s\n", http.errorToString(httpCode).c_str());
-    Serial.println(http.getString());
-      
-    http.end();    
+    getConfigFromMaster();
   }    
   delay(20);
   
+}
+
+void getConfigFromMaster() {
+  // Get the config information from the master
+  Serial.println("get /api/config");
+  HTTPClient http;
+  
+  // TODO : get IP from somewhere...
+  http.begin("http://192.168.4.1/api/config");
+  int httpCode = http.GET();   // Log stuff to Serial ?
+  Serial.print("HTTP code: ");
+  Serial.println(httpCode);
+  if(httpCode <= 0) {
+    Serial.printf("HTTP GET failed, error: %s\n", http.errorToString(httpCode).c_str());
+  }
+  String jsonConfig = http.getString();
+  http.end();
+
+  Serial.println(jsonConfig);
+
+  StaticJsonBuffer<CONFIG_PAYLOAD_SIZE> jsonBuffer; 
+  JsonObject& root = jsonBuffer.parseObject(jsonConfig);
+  bool masterTimeInitialized = root[XIOTModuleJsonTag::timeInitialized];
+  if(masterTimeInitialized) {
+    long timestamp = root[XIOTModuleJsonTag::timestamp];
+    setTime(timestamp);
+    timeInitialized = true;
+  }
+  bool APInitialized = root[XIOTModuleJsonTag::APInitialized];
+  // If access point on Master was customized, get its ssid and password, 
+  // Save them in EEProm
+  if(APInitialized) {
+    const char *ssid = root[XIOTModuleJsonTag::APSsid];   
+    const char *pwd = root[XIOTModuleJsonTag::APPwd];
+    if(strcmp(pwd, config->getPwd()) != 0) {
+      config->setSsid(ssid);
+      config->setPwd(pwd);
+      config->saveToEeprom();
+      connectSTA();
+    }
+  }
+    
 }
 
 // Called when STA is connected to home wifi and IP was obtained
@@ -102,7 +132,7 @@ void onSTAGotIP (WiFiEventStationModeGotIP ipInfo) {
   XUtils::stringToCharP(ipInfo.ip.toString(), &localIP);
   Serial.printf("Got IP on %s: %s\n", config->getSsid(), localIP);
   wifiConnected = true;
-  canGet = true;
+  canGet = true;  // Can't perform an http get from within the handler, it fails...
   wifiDisplay();
 
 }
@@ -129,6 +159,18 @@ void initDisplay( void ) {
 }
 
 void timeDisplay() {
+  oledDisplay->clockIcon(!timeInitialized);
+  if(timeInitialized) {
+    int h = hour();
+    int mi = minute();
+    int s = second();
+    int d = day();
+    int mo = month();
+    int y= year();
+    char message[30];
+    sprintf(message, "%02d:%02d:%02d %02d/%02d/%04d", h, mi, s, d, mo, y);
+    oledDisplay->refreshDateTime(message);
+  }
 }
 
 void wifiDisplay() {
