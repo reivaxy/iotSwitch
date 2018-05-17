@@ -14,17 +14,7 @@
 
 // Global object to store config
 SwitchConfigClass *config;
-
-ESP8266WebServer server(80);
-
-
-char *localIP;
-
 XIOTModule* module;
- 
-// Handlers will work as long as these variables exists. 
-static WiFiEventHandler wifiSTAGotIpHandler, wifiSTADisconnectedHandler;
-bool defaultAP = true;
 
 void setup(){
   Serial.begin(9600);
@@ -34,7 +24,7 @@ void setup(){
   config->init();
  
   module = new XIOTModule(config, 0x3C, D5, D6);
-       
+     
 }
 
 /*********************************
@@ -44,7 +34,6 @@ void loop() {
   // Mandatory periodic call, to refresh display, Clock, check requests
   // on the http API, ...
   module->refresh();
-  
   delay(20);  
 }
 
