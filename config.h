@@ -12,22 +12,15 @@
 #define CONFIG_VERSION 1
 #define CONFIG_NAME "iotSwitch"
 
-struct SwitchConfigStruct:XEEPROMConfigDataStruct {
-  // First two members version and name are mandatory and inherited from XEEPROMConfigDataStruct
-  
-  char ssid[SSID_MAX_LENGTH + 1];
-  char pwd[PWD_MAX_LENGTH + 1];
-   
+struct SwitchConfigStruct:ModuleConfigStruct {
+  // Add config fields needed if any
 };
 
-class SwitchConfigClass:public XEEPROMConfigClass {
+class SwitchConfigClass:public ModuleConfigClass {
 public:
   SwitchConfigClass(unsigned int version, const char* name);
   void initFromDefault();
-  void setSsid(const char* ssid);
-  void setPwd(const char* pwd);
-  const char* getSsid(void);
-  const char* getPwd(void);
+
 protected:
   SwitchConfigStruct* _getDataPtr(void);  
 };

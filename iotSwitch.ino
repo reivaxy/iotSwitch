@@ -182,7 +182,7 @@ void wifiDisplay() {
     strcat(message, " ");
     strcat(message, localIP);
   } else {
-    message[0] = 0;
+    sprintf(message, "Connecting to %s", config->getSsid());
   }
   oledDisplay->setLine(0, message);
   

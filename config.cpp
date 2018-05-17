@@ -7,7 +7,7 @@
 #include "config.h"
 
 
-SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):XEEPROMConfigClass(version, name, sizeof(SwitchConfigStruct)) {
+SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):ModuleConfigClass(version, name, sizeof(SwitchConfigStruct)) {
 }
 
 /**
@@ -16,27 +16,8 @@ SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):XEE
  * NB: version and name are handled by base class 
  */
 void SwitchConfigClass::initFromDefault() {
-  XEEPROMConfigClass::initFromDefault(); // handles version and name init 
-  SwitchConfigStruct* configPtr = _getDataPtr();
-  setSsid(DEFAULT_APSSID);
-  setPwd(DEFAULT_APPWD);
+  ModuleConfigClass::initFromDefault(); // handles version and name init, ssid and pwd
 
-}
-
-void SwitchConfigClass::setSsid(const char* ssid) {
-  XUtils::safeStringCopy(_getDataPtr()->ssid, ssid, SSID_MAX_LENGTH);
-}
-
-void SwitchConfigClass::setPwd(const char* pwd) {
-  XUtils::safeStringCopy(_getDataPtr()->pwd, pwd, PWD_MAX_LENGTH);
-}
-
-const char* SwitchConfigClass::getSsid() {
-  return _getDataPtr()->ssid;
-}
-
-const char* SwitchConfigClass::getPwd() {
-  return _getDataPtr()->pwd;
 }
 
 /**
@@ -44,5 +25,5 @@ const char* SwitchConfigClass::getPwd() {
  *
  */
 SwitchConfigStruct* SwitchConfigClass::_getDataPtr(void) {
-  return (SwitchConfigStruct*)XEEPROMConfigClass::_getDataPtr();
+  return (SwitchConfigStruct*)ModuleConfigClass::_getDataPtr();
 }
