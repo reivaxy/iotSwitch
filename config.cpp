@@ -7,7 +7,7 @@
 #include "config.h"
 
 
-ConfigClass::ConfigClass(unsigned int version, const char* name, void* dataPtr):XEEPROMConfigClass(version, name, dataPtr, sizeof(ConfigDataType)) {
+SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):XEEPROMConfigClass(version, name, sizeof(SwitchConfigStruct)) {
 }
 
 /**
@@ -15,33 +15,34 @@ ConfigClass::ConfigClass(unsigned int version, const char* name, void* dataPtr):
  * This is done each time the data structure version is different from the one saved in EEPROM
  * NB: version and name are handled by base class 
  */
-void ConfigClass::initFromDefault() {
+void SwitchConfigClass::initFromDefault() {
   XEEPROMConfigClass::initFromDefault(); // handles version and name init 
-  ConfigDataType* configPtr = _getConfigPtr();
+  SwitchConfigStruct* configPtr = _getDataPtr();
   setSsid(DEFAULT_APSSID);
   setPwd(DEFAULT_APPWD);
 
 }
 
-void ConfigClass::setSsid(const char* ssid) {
-  XUtils::safeStringCopy(_getConfigPtr()->ssid, ssid, SSID_MAX_LENGTH);
+void SwitchConfigClass::setSsid(const char* ssid) {
+  XUtils::safeStringCopy(_getDataPtr()->ssid, ssid, SSID_MAX_LENGTH);
 }
 
-void ConfigClass::setPwd(const char* pwd) {
-  XUtils::safeStringCopy(_getConfigPtr()->pwd, pwd, PWD_MAX_LENGTH);
+void SwitchConfigClass::setPwd(const char* pwd) {
+  XUtils::safeStringCopy(_getDataPtr()->pwd, pwd, PWD_MAX_LENGTH);
 }
 
-const char* ConfigClass::getSsid() {
-  return _getConfigPtr()->ssid;
+const char* SwitchConfigClass::getSsid() {
+  return _getDataPtr()->ssid;
 }
 
-const char* ConfigClass::getPwd() {
-  return _getConfigPtr()->pwd;
+const char* SwitchConfigClass::getPwd() {
+  return _getDataPtr()->pwd;
 }
+
 /**
  * Return the typed data structure object
  *
  */
-ConfigDataType* ConfigClass::_getConfigPtr(void) {
-  return (ConfigDataType*)getData();
+SwitchConfigStruct* SwitchConfigClass::_getDataPtr(void) {
+  return (SwitchConfigStruct*)XEEPROMConfigClass::_getDataPtr();
 }

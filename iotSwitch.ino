@@ -18,8 +18,7 @@
 #define API_VERSION "1.0"    // modules can check API version to make sure they are compatible...
 
 // Global object to store config
-ConfigDataType switchConfigData;
-ConfigClass *config;
+SwitchConfigClass *config;
 DisplayClass *oledDisplay;
 
 // I couldn't find a way to instanciate this in the XOLEDDisplay lib
@@ -44,7 +43,7 @@ void setup(){
   Serial.begin(9600);
   delay(100);
   
-  config = new ConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME, (void*)&switchConfigData);
+  config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME);
   config->init();
   Serial.println(config->getName());
  
