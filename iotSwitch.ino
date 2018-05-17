@@ -21,10 +21,6 @@
 SwitchConfigClass *config;
 DisplayClass *oledDisplay;
 
-// I couldn't find a way to instanciate this in the XOLEDDisplay lib
-// and keep it working further than in the constructor...
-SSD1306 display(0x3C, D5, D6);
-
 ESP8266WebServer server(80);
 time_t timeNow = 0; 
 time_t timeLast = 0;
@@ -50,7 +46,7 @@ void setup(){
   // Module is Wifi Station only
   WiFi.mode(WIFI_STA);
   // Initialise the OLED display
-  oledDisplay = new DisplayClass(&display);
+  oledDisplay = new DisplayClass(0x3C, D5, D6);
   initDisplay();
 
   connectSTA();
