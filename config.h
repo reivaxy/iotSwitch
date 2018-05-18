@@ -9,7 +9,7 @@
 #include <XIOTConfig.h>
 #include <XUtils.h>
 
-#define CONFIG_VERSION 1
+#define CONFIG_VERSION 0
 #define CONFIG_NAME "iotSwitch"
 
 struct SwitchConfigStruct:ModuleConfigStruct {
