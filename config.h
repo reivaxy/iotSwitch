@@ -10,7 +10,7 @@
 #include <XUtils.h>
 
 #define CONFIG_VERSION 1
-#define CONFIG_NAME "switch"
+#define CONFIG_NAME "Switch"
 
 struct SwitchConfigStruct:ModuleConfigStruct {
   // Add config fields needed if any
