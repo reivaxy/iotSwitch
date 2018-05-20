@@ -18,7 +18,7 @@ XIOTModule* module;
 
 void setup(){
   Serial.begin(9600);
-  delay(100);
+  delay(500); // time to connect serial
   
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME);
   config->init();
