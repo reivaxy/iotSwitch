@@ -13,7 +13,7 @@ public:
   SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl);
   
 protected:
-  bool _status = false;  
+  bool _status = true;  
   char* _customData() override;
   
 };
