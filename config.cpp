@@ -20,6 +20,11 @@ void SwitchConfigClass::initFromDefault() {
 
 }
 
+const char* SwitchConfigClass::getDefaultUIClassName() {
+  Serial.println("SwitchConfigClass::getDefaultUIClassName");
+  return "switchUIClass";
+}
+
 /**
  * Return the typed data structure object
  *

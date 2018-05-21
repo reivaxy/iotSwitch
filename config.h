@@ -20,6 +20,7 @@ class SwitchConfigClass:public ModuleConfigClass {
 public:
   SwitchConfigClass(unsigned int version, const char* name);
   void initFromDefault();
+  const char* getDefaultUIClassName() override;
 
 protected:
   SwitchConfigStruct* _getDataPtr(void);  

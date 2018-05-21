@@ -6,7 +6,7 @@
  
 
 #include <stdio.h>
-#include <XIOTModule.h>
+#include "SwitchModule.h"
 
 #include "config.h"
 
@@ -23,7 +23,7 @@ void setup(){
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME);
   config->init();
  
-  module = new XIOTModule(config, 0x3C, D5, D6);
+  module = new SwitchModule(config, 0x3C, D5, D6);
      
 }
 
