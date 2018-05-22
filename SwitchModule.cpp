@@ -9,6 +9,7 @@
 SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl):XIOTModule(config, displayAddr, displaySda, displayScl) {
   pinMode(5, OUTPUT);
   _oledDisplay->setLineAlignment(2, TEXT_ALIGN_CENTER);
+  setStatus(false);
 }
 
 char* SwitchModule::_customData() {
