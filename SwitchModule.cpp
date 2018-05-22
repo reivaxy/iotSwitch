@@ -15,6 +15,11 @@ char* SwitchModule::_customData() {
   char* data = (char *)malloc(100);
   sprintf(data, "{\"status\":\"%s\"}", _status ? "on": "off");
   digitalWrite(5, _status ? HIGH : LOW);
+  char message[100];
+  sprintf(message, "Switch is %s", _status ? "ON": "OFF");
+  _oledDisplay->setLineAlignment(2, TEXT_ALIGN_CENTER);
+  _oledDisplay->setLine(2, message, NOT_TRANSIENT, NOT_BLINKING);
+
   _status = !_status;
   
   
