@@ -15,5 +15,7 @@ public:
 protected:
   bool _status = true;  
   char* _customData() override;
+  char* useData(char *, int *) override;
+  void setStatus(bool);
   
 };
