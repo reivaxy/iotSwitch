@@ -28,7 +28,7 @@ Serial.println(data);
     _oledDisplay->setLine(1, "Got bad data", TRANSIENT, NOT_BLINKING);
   } else {
     const char *status = (const char*)root["status"];
-    if(strcmp(status, "on")) {
+    if(strcmp(status, "on") == 0) {
       setStatus(true);
     } else {
       setStatus(false);
