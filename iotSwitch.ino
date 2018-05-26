@@ -23,7 +23,7 @@ void setup(){
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME);
   config->init();
  
-  module = new SwitchModule(config, 0x3C, D5, D6);
+  module = new SwitchModule(config, 0x3C, 14, 12);
      
 }
 
