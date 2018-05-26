@@ -33,7 +33,7 @@ void setup(){
 void loop() {
   // Mandatory periodic call, to refresh display, Clock, check requests
   // on the http API, ...
-  module->refresh();
+  module->loop();
   delay(20);  
 }
 
