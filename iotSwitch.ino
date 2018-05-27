@@ -20,7 +20,7 @@ void setup(){
   Serial.begin(9600);
   delay(500); // time to connect serial
   
-  config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)CONFIG_NAME);
+  config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)MODULE_NAME);
   config->init();
  
   module = new SwitchModule(config, 0x3C, 14, 12);

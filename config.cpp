@@ -7,7 +7,7 @@
 #include "config.h"
 
 
-SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):ModuleConfigClass(version, name, sizeof(SwitchConfigStruct)) {
+SwitchConfigClass::SwitchConfigClass(unsigned int version, const char* name):ModuleConfigClass(version, "iotswitch", name, sizeof(SwitchConfigStruct)) {
 }
 
 /**

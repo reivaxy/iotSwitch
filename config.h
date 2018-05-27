@@ -9,8 +9,8 @@
 #include <XIOTConfig.h>
 #include <XUtils.h>
 
-#define CONFIG_VERSION 10
-#define CONFIG_NAME "Switch"
+#define CONFIG_VERSION 1
+#define MODULE_NAME "Switch"
 
 struct SwitchConfigStruct:ModuleConfigStruct {
   // Add config fields needed if any
