@@ -6,8 +6,9 @@
  
 #include "SwitchModule.h"
  
-SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl):XIOTModule(config, displayAddr, displaySda, displayScl) {
-  pinMode(5, OUTPUT);
+SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl, int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl) {
+  _relayPin = relayPin;
+  pinMode(relayPin, OUTPUT);
   _oledDisplay->setLineAlignment(2, TEXT_ALIGN_CENTER);
   setStatus(false);
 }
@@ -41,7 +42,7 @@ Serial.println(data);
 
 void SwitchModule::setStatus(bool status) {
   _status = status;
-  digitalWrite(5, _status ? HIGH : LOW);
+  digitalWrite(_relayPin, _status ? HIGH : LOW);
   char message[100];
   sprintf(message, "Switch is %s", _status ? "ON": "OFF");
   _oledDisplay->setLine(2, message, NOT_TRANSIENT, NOT_BLINKING);
