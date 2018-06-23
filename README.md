@@ -1,6 +1,6 @@
 # iotSwitch
 
-This is the first slave module for the iotinator project, its purpose is to allow commuting a relay through the Xiot framework, in order to turn on and off a lamp, a heater, an air conditionner or any other device.
+This is the first agent module for the iotinator project, its purpose is to allow commuting a relay through the Xiot framework, in order to turn on and off a lamp, a heater, an air conditionner or any other device.
 
 To use it, you'll preferrably also need the iotinator master module (https://github.com/reivaxy/iotinator), or you can just use it's REST API to integrate to your own designs.
 
@@ -18,6 +18,10 @@ You'll need to clone these repositories into your arduino "libraries" directory 
 
 And some libraries that can be found through the Arduino IDE
 
-TODO: list the libraries :)
- 
+You will find <a href="https://github.com/reivaxy/iotinator/wiki/07.-Dev-environnement-and-debug">here</a> all the information to install your dev environment.
+
+Here is an iotSwitch module encased in a power socket to remote control it:
+
+<img src="https://raw.githubusercontent.com/reivaxy/iotinator/master/resources/prototype/finished.jpg" width="400px"/>
+
  
