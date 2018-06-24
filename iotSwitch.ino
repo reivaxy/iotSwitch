@@ -30,7 +30,7 @@ void setup(){
   relayPin = 3;
   #else
   Serial.begin(9600);
-  #endif;
+  #endif
   delay(500); // time to connect serial
   
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)MODULE_NAME);
