@@ -22,7 +22,7 @@ int relayPin = 5;
 
 
 void setup(){
-  //#define ESP01
+  #define ESP01
   #ifdef ESP01
   Serial.begin(9600,SERIAL_8N1,SERIAL_TX_ONLY); 
   sdl = 2;
@@ -30,7 +30,7 @@ void setup(){
   relayPin = 3;
   #else
   Serial.begin(9600);
-  #endif;
+  #endif
   delay(500); // time to connect serial
   
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)MODULE_NAME);
