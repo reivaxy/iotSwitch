@@ -1,5 +1,5 @@
 /**
- *  iotinator Switch Slave module 
+ *  iotinator Switch Agent module
  *  Xavier Grosjean 2018
  *  Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
  */
