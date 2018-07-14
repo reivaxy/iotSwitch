@@ -16,16 +16,16 @@
 SwitchConfigClass *config;
 XIOTModule* module;
 
-int sdl = 12;
+int scl = 12;
 int sda = 14;
 int relayPin = 5;
 
 
 void setup(){
-  //#define ESP01
+  #define ESP01
   #ifdef ESP01
   Serial.begin(9600,SERIAL_8N1,SERIAL_TX_ONLY); 
-  sdl = 2;
+  scl = 2;
   sda = 0;
   relayPin = 3;
   #else
@@ -36,7 +36,7 @@ void setup(){
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)MODULE_NAME);
   config->init();
  
-  module = new SwitchModule(config, 0x3C, sda, sdl, relayPin);
+  module = new SwitchModule(config, 0x3C, sda, scl, relayPin);
      
 }
 
