@@ -7,6 +7,7 @@
 #pragma once 
 #include "config.h"
 #include <XIOTModule.h>
+#include "onOffFont.h"
  
 class SwitchModule:public XIOTModule {
 public:

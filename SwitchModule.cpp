@@ -6,9 +6,12 @@
  
 #include "SwitchModule.h"
  
-SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl, int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl) {
+SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl,
+                            int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl, true, 200) {
   _relayPin = relayPin;
   pinMode(relayPin, OUTPUT);
+  _oledDisplay->setLinePosition(2, 0, 32);
+  _oledDisplay->setLineFont(2, onOffFont);
   _oledDisplay->setLineAlignment(2, TEXT_ALIGN_CENTER);
   setStatus(false);
 }
@@ -44,6 +47,6 @@ void SwitchModule::setStatus(bool status) {
   _status = status;
   digitalWrite(_relayPin, _status ? HIGH : LOW);
   char message[100];
-  sprintf(message, "Switch is %s", _status ? "ON": "OFF");
+  sprintf(message, "%s", _status ? "AB": "ACC");     // ON or OFF in the specific font used
   _oledDisplay->setLine(2, message, NOT_TRANSIENT, NOT_BLINKING);
 }
