@@ -7,7 +7,7 @@
 #include "SwitchModule.h"
  
 SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl,
-                            int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl, true, 200) {
+                            int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl, false, 200) {
   _relayPin = relayPin;
   pinMode(relayPin, OUTPUT);
   _oledDisplay->setLinePosition(2, 0, 32);
@@ -41,6 +41,21 @@ Serial.println(data);
   }
   *httpCode = 200;
   return emptyMallocedResponse();
+}
+
+bool SwitchModule::customProcessSMS(const char* phoneNumber, const bool isAdmin, const char* message) {
+  if(strcmp(message, "on") == 0) {
+    setStatus(true);
+  } else {
+    if(strcmp(message, "off") == 0) {
+      setStatus(false);
+    }
+  }
+  return true;
+}
+
+char* SwitchModule::_globalStatus() {
+  return strdup(_status?"on":"off");  
 }
 
 void SwitchModule::setStatus(bool status) {

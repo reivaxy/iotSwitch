@@ -16,7 +16,9 @@ public:
 protected:
   bool _status = true;  
   char* _customData() override;
+  char* _globalStatus() override;
   char* useData(char *, int *) override;
+  bool customProcessSMS(const char* phoneNumber, const bool isAdmin, const char* message) override;
   void setStatus(bool);
   int _relayPin;
 };
