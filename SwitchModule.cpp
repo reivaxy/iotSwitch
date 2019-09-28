@@ -44,10 +44,10 @@ Serial.println(data);
 }
 
 bool SwitchModule::customProcessSMS(const char* phoneNumber, const bool isAdmin, const char* message) {
-  if(strcmp(message, "on") == 0) {
+  if(strcmp(message, "on") * strcmp(message, "1") == 0) {
     setStatus(true);
   } else {
-    if(strcmp(message, "off") == 0) {
+    if(strcmp(message, "off") * strcmp(message, "0") == 0) {
       setStatus(false);
     }
   }
