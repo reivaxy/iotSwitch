@@ -19,6 +19,7 @@ XIOTModule* module;
 int scl = 12;
 int sda = 14;
 int relayPin = 5;
+int inPin = 4;
 
 
 void setup(){
@@ -28,6 +29,7 @@ void setup(){
   scl = 2;
   sda = 0;
   relayPin = 3;
+  inPin = 1;
   #else
   Serial.begin(9600);
   #endif
@@ -36,7 +38,7 @@ void setup(){
   config = new SwitchConfigClass((unsigned int)CONFIG_VERSION, (char*)MODULE_NAME);
   config->init();
  
-  module = new SwitchModule(config, 0x3C, sda, scl, relayPin);
+  module = new SwitchModule(config, 0x3C, sda, scl, relayPin, inPin);
      
 }
 

@@ -6,10 +6,15 @@
  
 #include "SwitchModule.h"
  
+ #define LONG_PUSH_DURATION 2000
+  
 SwitchModule::SwitchModule(SwitchConfigClass* config, int displayAddr, int displaySda, int displayScl,
-                            int relayPin):XIOTModule(config, displayAddr, displaySda, displayScl, false, 200) {
+                            int relayPin, int inPin):XIOTModule(config, displayAddr, displaySda, displayScl, true, 200) {
   _relayPin = relayPin;
   pinMode(relayPin, OUTPUT);
+  _inPin = inPin;
+  pinMode(_inPin, INPUT);
+
   _oledDisplay->setLinePosition(2, 0, 32);
   _oledDisplay->setLineFont(2, onOffFont);
   _oledDisplay->setLineAlignment(2, TEXT_ALIGN_CENTER);
@@ -64,4 +69,27 @@ void SwitchModule::setStatus(bool status) {
   char message[100];
   sprintf(message, "%s", _status ? "AB": "ACC");     // ON or OFF in the specific font used
   _oledDisplay->setLine(2, message, NOT_TRANSIENT, NOT_BLINKING);
+}
+
+void SwitchModule::customLoop() {
+   int level = digitalRead(_inPin);
+   if (level == HIGH) {
+     _oledDisplay->setLine(3, "push", TRANSIENT, NOT_BLINKING);
+     // start time counter
+     if (_beginInputHigh == 0) {
+      _beginInputHigh = millis();
+     }
+     // Is button pushed longer than LONG_PUSH_DURATION ?       
+     if (XUtils::isElapsedDelay(millis(), &_beginInputHigh, LONG_PUSH_DURATION)) {
+       ESP.restart(); 
+     }
+   } else {
+     _oledDisplay->setLine(3, "", TRANSIENT, NOT_BLINKING);
+     // Short push : toggle status
+     if (_beginInputHigh != 0) {
+       _beginInputHigh = 0;
+       setStatus(!_status);
+     }
+   }
+     
 }
