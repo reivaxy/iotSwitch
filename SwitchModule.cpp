@@ -89,6 +89,7 @@ void SwitchModule::customLoop() {
      if (_beginInputHigh != 0) {
        _beginInputHigh = 0;
        setStatus(!_status);
+       sendData(false);
      }
    }
      
