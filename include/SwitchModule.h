@@ -19,7 +19,7 @@ protected:
   char* _customData() override;
   char* _globalStatus() override;
   unsigned long _beginInputHigh = 0;
-  char* useData(char *, int *) override;
+  char* useData(const char *, int *) override;
   bool customProcessSMS(const char* phoneNumber, const bool isAdmin, const char* message) override;
   void setStatus(bool);
   int _relayPin;

@@ -1,0 +1,18 @@
+[submodule "lib/XIOTConfig"]
+	path = lib/XIOTConfig
+	url = git@github.com:reivaxy/XIOTConfig.git
+[submodule "lib/XUtils"]
+	path = lib/XUtils
+	url = git@github.com:reivaxy/XUtils.git
+[submodule "lib/XEEPROMConfig"]
+	path = lib/XEEPROMConfig
+	url = git@github.com:reivaxy/XEEPROMConfig.git
+[submodule "lib/XIOTModule"]
+	path = lib/XIOTModule
+	url = git@github.com:reivaxy/XIOTModule.git
+[submodule "lib/XIOTDisplay"]
+	path = lib/XIOTDisplay
+	url = git@github.com:reivaxy/XIOTDisplay.git
+[submodule "lib/XOLEDDisplay"]
+	path = lib/XOLEDDisplay
+	url = git@github.com:reivaxy/XOLEDDisplay.git

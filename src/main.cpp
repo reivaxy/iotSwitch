@@ -23,7 +23,8 @@ int inPin = 4;
 
 
 void setup(){
-  #define ESP01
+  // ESP01 is defined through compilation directive when compiling for esp01 board
+  // It's defined in platformio.ini file for the esp01 environment.
   #ifdef ESP01
   Serial.begin(9600,SERIAL_8N1,SERIAL_TX_ONLY); 
   scl = 2;
