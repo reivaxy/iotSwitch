@@ -23,7 +23,6 @@ int inPin = 4;
 
 
 void setup(){
-  #define ESP01
   #ifdef ESP01
   Serial.begin(9600,SERIAL_8N1,SERIAL_TX_ONLY); 
   scl = 2;

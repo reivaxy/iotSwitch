@@ -28,7 +28,7 @@ char* SwitchModule::_customData() {
   return data;  
 }
 
-char* SwitchModule::useData(char* data, int* httpCode) {
+char* SwitchModule::useData(const char* data, int* httpCode) {
 Serial.println("switch");
 Serial.println(data);
   const int bufferSize = 2*JSON_OBJECT_SIZE(1);
